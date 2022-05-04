@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+contract ownable {
+    address public owner; //地址变量赋值，属于全局变量，都可以调用修改
+    constructor() { //初始化所有人就是合约的管理者，只在第一次部署的时候起作用，后面不再起作用，msg代表的是与当前合约交互的账户
+        owner = msg.sender;
+    }
+    modifier onlyowner() {
+        require( msg.sender == owner, "you are not authentic"); //修饰器判断当前合约拥有者是否是当前的地址
+        _;
+    }
+    function setowner(address _newowner) external onlyowner() { //重新设置合约的管理员
+        require( _newowner != address(0)," locked"); //要求新地址不能为空
+        owner = _newowner;
+    }
+    function onlyownercall() external onlyowner() {
+
+    }
+    function anyonecall() external {
+
+    }
+}
