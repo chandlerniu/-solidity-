@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+contract error {
+    function testrequire(uint i) public pure {
+        require(i <= 10," i > 10");
+        //code i满足条件才会运行这里的代码，不为真就会报错
+    } 
+    function testrevert(uint i) public pure {
+        if (i > 10) {
+            revert("i > 10");
+        }
+    }
+    uint public n = 1;
+    function testassert() public view {
+        assert(n ==1);
+    }
+    function foo(uint i) public {
+        n += 1;
+        require(i < 10);
+    }
+
+    error myerror(address caller,uint j);
+    function customerror(uint i) public view {
+        if (i > 10) {
+            revert myerror(msg.sender,i);
+        }
+    } 
+
+}
+
+
