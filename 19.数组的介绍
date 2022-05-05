@@ -1,0 +1,27 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+contract array {
+    uint[] public num = [1,22,333];
+    uint[4] public numfixed = [4,5,6,7];
+    function example() external {
+        num.push(44);
+        //uint x = num[2];
+        num[1] = 999; 
+        delete num[2]; 
+        num.pop();
+        // uint len = num.length; 
+    }
+
+    //memory是不能够改变长度的
+
+    // uint[] memory a = new uint[](5); //
+    // a[1] = 123;
+
+    function returnarray() external view returns(uint[] memory) {
+        return num;
+    }
+
+
+
+}
