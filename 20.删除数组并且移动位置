@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+contract arrayshift {
+    uint[] public arr = [1,2,3,4]; //数组是从0到3,总长度是4，但是最大可以删除的是a3
+    function remove(uint num) public  {
+        require(num < arr.length, " not valid "); //先确定有几个变量，首先是删除数组的编号num，不能超过最大长度4，要么就报错
+        for(uint i = _index ;i < arr.length - 1; i++){ //再定一个变量i，这是循环命令里的，不能使用num，如果使用的话会报错，并且要让这个i小于4-1，如果i=3就退出循环了，不再执行大括号的内容
+            arr[i] = arr[i+1]; 
+        }
+        arr.pop();
+    }
+}
