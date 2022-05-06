@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+contract structor {
+    struct Car {
+        string  model;
+        uint year;
+        address owner;
+    }
+
+    Car public car; //自定义结构体的变量名
+    Car[] public cars; //自定义结构体的变量数组名
+    mapping(address => Car[]) public carsbyowner; //将地址映射给这个数组，但是这个合约中没有使用到
+
+    function examples() external {
+        Car memory toyota = Car('toyota',1999,msg.sender); //在内存中定一个一个变量，并且赋值
+        Car memory lambo = Car({year:2010,model:'lambo',owner:msg.sender});
+        Car memory tesla;
+        tesla.model = 'telsa';
+        tesla.year = 2022;
+        tesla.owner = 0xB897DC0Ef211FA566909680d8eD4C6Ad486e7717;
+        cars.push(toyota);//在数组中推入这个元素，后面是把这些数据都推进去
+        cars.push(lambo);
+        cars.push(tesla);
+        cars.push(Car('ferrari',2020,msg.sender));
+
+        Car storage _car = cars[0];//将cars数组中第一个元素重新赋予一个变量名
+        _car.year = 3000;
+        delete _car.owner;
+        delete cars[1]; //整个删除后都会恢复到默认状态，全是0
+    }
+}
