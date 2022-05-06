@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+contract enumm {
+    enum Status { //通常新建的结构体类型首字母都要大写,合约调用的时候以数值形式返回
+        none,
+        pending,
+        completed,
+        shipped,
+        rejected,
+        canceled
+
+    }
+    Status public status; //全局可视，在外部调用的是很好可以看到的，可以修改
+
+    struct Order {
+        address buyer;
+        Status status;
+    }
+
+    Order[] public orders; //结构体数组
+    function get() view external returns (Status) {//获得枚举中的值信息
+        return status;
+    }
+    function set(Status _status) external {//输入设定枚举中的一个状态
+        status = _status;
+    }
+    function ship() external { //将某一个状态赋予
+        status = Status.shipped;
+    }
+    function reset() external {
+        delete status;
+    }
+
+}
