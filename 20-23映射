@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.3;
+
+//映射就是对应一个数字或者布尔值，让后续的操作更加简单，下面就是让地址对应一个数值
+contract map {
+    mapping (address => uint) public balances; 
+    mapping (address => mapping(address => bool)) public isfriends;
+
+    function example() external {
+        balances[msg.sender] = 123;
+        uint bal = balances[msg.sender]; 
+        uint bal1 = balances[address(1)];
+        balances[msg.sender] += 456;
+    }
+
+}
+
+contract map1 {
+
+    mapping(address => uint) public testuint; //定义test这个是地址的映射，通过他可以映射成一个数值，如果没有赋予映射地址相关的数值就默认是0 
+    mapping(address => bool) public testbool;
+    address[] public keys; //这是地址类型的数组，里面装的全是数组，而不是数值 
+
+    function set(address _key, uint _val) external {
+        testuint[_key] = _val; //通过外部函数输入一个地址，并且映射到一个数值上去
+        if (!testbool[_key]) {  //如果这个数组里没有定义的key，没有的话会显示key的bool为false，那么就把他插入进去，此时他的布尔就是true
+            testbool[_key] = true;  //把key赋了bool值了，有了bool就无需遍历了，只要判断真假就能判定他是否存在数组之中
+            keys.push(_key); //在数组里面插入了这个地址，就是插入的意思
+        }
+    }
+    function getsize() external view returns(uint) { //可以测定数组的长度
+        return keys.length;
+    }
+    function first() external view returns(uint) { //获取第一个数组中地址的值
+        return testuint[keys[0]];
+    }
+    function last() external view returns(uint) { //获取最后一个数组中地址的值
+        return testuint[keys[keys.length-1]];
+    }
+    function random(uint i) external view returns(uint) { //获取任意地址的值
+        return testuint[keys[i]];
+    }
+}
